@@ -2,6 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Infographic } from "@/components/Infographic";
 import { getDeepLesson, todaySlug } from "@/lib/deepLessons";
+import {
+  getDeepPresentation,
+  getMediaRecommendations,
+  getSupplementalDeepLesson,
+} from "@/lib/supplementalDeepLessons";
 import { getIdea, ideas } from "@/lib/ideas";
 
 export function generateStaticParams() {
@@ -13,7 +18,9 @@ export default async function IdeaPage({ params }: { params: Promise<{ slug: str
   const idea = getIdea(slug);
   if (!idea) notFound();
 
-  const deepLesson = getDeepLesson(slug);
+  const deepLesson = getDeepLesson(slug) ?? getSupplementalDeepLesson(slug);
+  const presentation = getDeepPresentation(slug);
+  const media = getMediaRecommendations(slug);
   const nextIdea = ideas[idea.number % ideas.length];
   const isToday = slug === todaySlug;
   const critiques = deepLesson
@@ -88,20 +95,20 @@ export default async function IdeaPage({ params }: { params: Promise<{ slug: str
 
             <section className="article-section bridge-section">
               <div className="section-head small">
-                <p className="overline">The Steam Factory Test</p>
-                <h2>Apply it to systems you already know.</h2>
-                <p>Do not ask only where AI saves time. Ask which old scarcity created the workflow.</p>
+                <p className="overline">{presentation?.applicationOverline ?? "The Steam Factory Test"}</p>
+                <h2>{presentation?.applicationTitle ?? "Apply it to systems you already know."}</h2>
+                <p>{presentation?.applicationIntro ?? "Do not ask only where AI saves time. Ask which old scarcity created the workflow."}</p>
               </div>
               <div className="bridge-list">
                 {deepLesson.applications.map((application) => (
                   <div className="bridge" key={application.label}>
                     <div className="bridge-label">{application.label}</div>
                     <div>
-                      <small>ELECTRIC STEAM FACTORY</small>
+                      <small>{presentation?.oldLabel ?? "ELECTRIC STEAM FACTORY"}</small>
                       <p>{application.oldFrame}</p>
                     </div>
                     <div>
-                      <small>DEEPER QUESTION</small>
+                      <small>{presentation?.newLabel ?? "DEEPER QUESTION"}</small>
                       <p className="quote">{application.deeperQuestion}</p>
                     </div>
                   </div>
@@ -179,12 +186,32 @@ export default async function IdeaPage({ params }: { params: Promise<{ slug: str
 
         {deepLesson ? (
           <section className="pocket">
-            <span>THE FOUNDER QUESTION</span>
+            <span>{presentation?.pocketLabel ?? "THE FOUNDER QUESTION"}</span>
             <p>“{deepLesson.goingDeep.diagnostic}”</p>
           </section>
         ) : (
           <section className="pocket"><span>KEEP ONE LINE</span><p>“{idea.pocketLine}”</p></section>
         )}
+
+        {media.length > 0 ? (
+          <section className="article-section sources">
+            <div className="section-head small">
+              <p className="overline">Watch / listen</p>
+              <h2>Worth your time.</h2>
+              <p>Chosen for substance and conversational usefulness, not because a video happens to exist.</p>
+            </div>
+            <div className="source-grid">
+              {media.map((item) => (
+                <div className="source" key={item.url}>
+                  {item.pick ? <span className="pill live">{item.pick}</span> : null}
+                  <a href={item.url} target="_blank" rel="noreferrer"><strong>{item.title}</strong></a>
+                  <span>{item.creator} · {item.format} · {item.duration}</span>
+                  <p>{item.why}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section className="article-section blog-section">
           <div className="section-head small">
