@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { todaySlug } from "@/lib/deepLessons";
 import { ideas } from "@/lib/ideas";
 
 export default function Home() {
-  const today = ideas.find((idea) => idea.status === "today")!;
+  const today = ideas.find((idea) => idea.slug === todaySlug)!;
+
   return (
     <main>
       <section className="hero shell">
@@ -30,14 +32,17 @@ export default function Home() {
       <section className="shell catalog">
         <div className="section-head"><p className="overline">The queue</p><h2>Eight lenses worth keeping in your head.</h2></div>
         <div className="idea-grid">
-          {ideas.map((idea) => (
-            <Link className="idea-card" href={`/ideas/${idea.slug}`} key={idea.slug}>
-              <div className="card-top"><span>{String(idea.number).padStart(2, "0")}</span><span className="rating">{idea.rating}</span></div>
-              <h3>{idea.title}</h3>
-              <p>{idea.oneLiner}</p>
-              <div className="card-bottom"><span>{idea.status === "today" ? "FULL LESSON" : "STARTER PAGE"}</span><span>↗</span></div>
-            </Link>
-          ))}
+          {ideas.map((idea) => {
+            const isToday = idea.slug === todaySlug;
+            return (
+              <Link className="idea-card" href={`/ideas/${idea.slug}`} key={idea.slug}>
+                <div className="card-top"><span>{String(idea.number).padStart(2, "0")}</span><span className="rating">{idea.rating}</span></div>
+                <h3>{idea.title}</h3>
+                <p>{idea.oneLiner}</p>
+                <div className="card-bottom"><span>{isToday ? "FULL LESSON" : "STARTER PAGE"}</span><span>↗</span></div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
