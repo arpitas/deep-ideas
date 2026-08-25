@@ -1,27 +1,27 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Infographic } from "@/components/Infographic";
+import { allIdeas, getAllIdea } from "@/lib/allIdeas";
 import { getDeepLesson, todaySlug } from "@/lib/deepLessons";
 import {
   getDeepPresentation,
   getMediaRecommendations,
   getSupplementalDeepLesson,
 } from "@/lib/supplementalDeepLessons";
-import { getIdea, ideas } from "@/lib/ideas";
 
 export function generateStaticParams() {
-  return ideas.map((idea) => ({ slug: idea.slug }));
+  return allIdeas.map((idea) => ({ slug: idea.slug }));
 }
 
 export default async function IdeaPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const idea = getIdea(slug);
+  const idea = getAllIdea(slug);
   if (!idea) notFound();
 
   const deepLesson = getDeepLesson(slug) ?? getSupplementalDeepLesson(slug);
   const presentation = getDeepPresentation(slug);
   const media = getMediaRecommendations(slug);
-  const nextIdea = ideas[idea.number % ideas.length];
+  const nextIdea = allIdeas[idea.number % allIdeas.length];
   const isToday = slug === todaySlug;
   const critiques = deepLesson
     ? [...idea.critiques, ...deepLesson.critiqueAdditions]

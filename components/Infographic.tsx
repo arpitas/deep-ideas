@@ -29,6 +29,7 @@ export function Infographic({ kind }: { kind: string }) {
     moral: { left: "Tiny ethical choices", middle: "80,000 work hours", right: "Moral impact", thesis: "We moralize consumption more readily than the allocation of our productive lives." },
     metamodern: { left: "Irony", middle: "Self-awareness", right: "Sincerity", thesis: "Knowing something is constructed does not require refusing to care about it." },
     legibility: { left: "Messy person", middle: "Score / category / KPI", right: "Institutional decision", thesis: "Scale requires compression. Trouble starts when the compressed map is mistaken for the territory." },
+    integral: { left: "Inner experience", middle: "Behavior · culture · systems", right: "Bigger diagnosis", thesis: "A useful explanation can still be incomplete. Integral Theory asks which valid perspective your favorite lens has made invisible." },
   };
   const item = map[kind] ?? map.legibility;
   return (

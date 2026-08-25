@@ -1,9 +1,9 @@
 import Link from "next/link";
+import { allIdeas } from "@/lib/allIdeas";
 import { todaySlug } from "@/lib/deepLessons";
-import { ideas } from "@/lib/ideas";
 
 export default function Home() {
-  const today = ideas.find((idea) => idea.slug === todaySlug)!;
+  const today = allIdeas.find((idea) => idea.slug === todaySlug)!;
 
   return (
     <main>
@@ -30,9 +30,9 @@ export default function Home() {
       </section>
 
       <section className="shell catalog">
-        <div className="section-head"><p className="overline">The queue</p><h2>Eight lenses worth keeping in your head.</h2></div>
+        <div className="section-head"><p className="overline">The queue</p><h2>Nine lenses worth keeping in your head.</h2></div>
         <div className="idea-grid">
-          {ideas.map((idea) => {
+          {allIdeas.map((idea) => {
             const isToday = idea.slug === todaySlug;
             return (
               <Link className="idea-card" href={`/ideas/${idea.slug}`} key={idea.slug}>
