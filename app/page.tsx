@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { allIdeas } from "@/lib/allIdeas";
-import { todaySlug } from "@/lib/deepLessons";
+import { getDeepLesson, todaySlug } from "@/lib/deepLessons";
+import { getSupplementalDeepLesson } from "@/lib/supplementalDeepLessons";
 
 export default function Home() {
   const today = allIdeas.find((idea) => idea.slug === todaySlug)!;
@@ -33,13 +34,13 @@ export default function Home() {
         <div className="section-head"><p className="overline">The queue</p><h2>Nine lenses worth keeping in your head.</h2></div>
         <div className="idea-grid">
           {allIdeas.map((idea) => {
-            const isToday = idea.slug === todaySlug;
+            const isFullLesson = Boolean(getDeepLesson(idea.slug) ?? getSupplementalDeepLesson(idea.slug));
             return (
               <Link className="idea-card" href={`/ideas/${idea.slug}`} key={idea.slug}>
                 <div className="card-top"><span>{String(idea.number).padStart(2, "0")}</span><span className="rating">{idea.rating}</span></div>
                 <h3>{idea.title}</h3>
                 <p>{idea.oneLiner}</p>
-                <div className="card-bottom"><span>{isToday ? "FULL LESSON" : "STARTER PAGE"}</span><span>↗</span></div>
+                <div className="card-bottom"><span>{isFullLesson ? "FULL LESSON" : "STARTER PAGE"}</span><span>↗</span></div>
               </Link>
             );
           })}
