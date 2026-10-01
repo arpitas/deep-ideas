@@ -23,7 +23,7 @@ export default function Home() {
       </section>
 
       <section className="shell today-card">
-        <div className="today-meta"><span className="pill live">TODAY</span><span>Idea {String(today.number).padStart(2, "0")}</span></div>
+        <div className="today-meta"><span className="pill live">TODAY</span><span>Idea {String(today.number).padStart(2, "0")}</span>{today.publishedAt ? <span>{new Date(`${today.publishedAt}T12:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span> : null}</div>
         <div className="today-grid">
           <div><h2>{today.title}</h2><p>{today.kicker}</p></div>
           <div className="today-hook"><span>The hook</span><p>{today.hook}</p><Link href={`/ideas/${today.slug}`}>Go deep <span>↗</span></Link></div>
@@ -31,7 +31,7 @@ export default function Home() {
       </section>
 
       <section className="shell catalog">
-        <div className="section-head"><p className="overline">The queue</p><h2>Nine lenses worth keeping in your head.</h2></div>
+        <div className="section-head"><p className="overline">The queue</p><h2>Ten lenses worth keeping in your head.</h2></div>
         <div className="idea-grid">
           {allIdeas.map((idea) => {
             const isFullLesson = Boolean(getDeepLesson(idea.slug) ?? getSupplementalDeepLesson(idea.slug));
