@@ -7,6 +7,7 @@ export type Idea = {
   kicker: string;
   rating: string;
   status: "today" | "queued";
+  publishedAt?: string;
   infographic: string;
   oneLiner: string;
   hook: string;
