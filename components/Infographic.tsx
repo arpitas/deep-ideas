@@ -30,6 +30,7 @@ export function Infographic({ kind }: { kind: string }) {
     metamodern: { left: "Irony", middle: "Self-awareness", right: "Sincerity", thesis: "Knowing something is constructed does not require refusing to care about it." },
     legibility: { left: "Messy person", middle: "Score / category / KPI", right: "Institutional decision", thesis: "Scale requires compression. Trouble starts when the compressed map is mistaken for the territory." },
     integral: { left: "Inner experience", middle: "Behavior · culture · systems", right: "Bigger diagnosis", thesis: "A useful explanation can still be incomplete. Integral Theory asks which valid perspective your favorite lens has made invisible." },
+    maintenance: { left: "Breakdown", middle: "Repair · care · adaptation", right: "Working again", thesis: "What looks stable may be a continuous achievement: people quietly repairing the gap between the design and reality." },
   };
   const item = map[kind] ?? map.legibility;
   return (
