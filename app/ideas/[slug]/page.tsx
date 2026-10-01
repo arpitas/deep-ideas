@@ -23,6 +23,9 @@ export default async function IdeaPage({ params }: { params: Promise<{ slug: str
   const media = getMediaRecommendations(slug);
   const nextIdea = allIdeas[idea.number % allIdeas.length];
   const isToday = slug === todaySlug;
+  const publishedLabel = idea.publishedAt
+    ? new Date(`${idea.publishedAt}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+    : null;
   const critiques = deepLesson
     ? [...idea.critiques, ...deepLesson.critiqueAdditions]
     : idea.critiques;
@@ -41,6 +44,7 @@ export default async function IdeaPage({ params }: { params: Promise<{ slug: str
             <span className="pill">IDEA {String(idea.number).padStart(2, "0")}</span>
             <span>{idea.rating}</span>
             {isToday ? <span className="pill live">TODAY</span> : null}
+            {publishedLabel ? <span className="published-date">{publishedLabel}</span> : null}
           </div>
           <h1>{idea.title}</h1>
           <p className="dek">{idea.kicker}</p>
@@ -194,7 +198,7 @@ export default async function IdeaPage({ params }: { params: Promise<{ slug: str
         )}
 
         {media.length > 0 ? (
-          <section className="article-section sources">
+          <section className="article-section sources media-section">
             <div className="section-head small">
               <p className="overline">Watch / listen</p>
               <h2>Worth your time.</h2>
@@ -213,7 +217,7 @@ export default async function IdeaPage({ params }: { params: Promise<{ slug: str
           </section>
         ) : null}
 
-        <section className="article-section blog-section">
+        <section className="article-section blog-section print-omit">
           <div className="section-head small">
             <p className="overline">Blog seeds</p>
             <h2>Use the thinker as a catalyst, not a book report.</h2>
