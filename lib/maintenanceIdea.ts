@@ -7,7 +7,8 @@ export const maintenanceIdea: Idea = {
   kicker: "Maintenance, repair & the invisible labor that makes ‘working’ look natural.",
   rating: "5/5",
   status: "today",
-  infographic: "accountability",
+  publishedAt: "2026-10-01",
+  infographic: "maintenance",
   oneLiner: "Broken World Thinking starts from a less glamorous premise than innovation culture: complex worlds are always decaying, and functioning is an ongoing achievement produced by maintenance, repair, care, and adaptation.",
   hook: "A system that looks stable may not be robust at all; it may simply have excellent people constantly repairing the gap between the design and reality.",
   explanation: [
