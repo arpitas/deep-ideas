@@ -23,7 +23,7 @@ export type DeepLesson = {
   sources: DeepSource[];
 };
 
-export const todaySlug = "ai-as-normal-technology";
+export const todaySlug = "broken-world-thinking";
 
 const deepLessons: Record<string, DeepLesson> = {
   "ai-as-normal-technology": {
